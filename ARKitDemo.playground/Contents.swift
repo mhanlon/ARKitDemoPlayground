@@ -3,6 +3,44 @@
 import UIKit
 import ARKit
 import PlaygroundSupport
+import SpriteKit
+
+public class Scene: SKScene {
+    
+    public override required init(size:CGSize) {
+        super.init(size:size)
+    }
+    
+    public required init(coder: NSCoder) {
+        super.init(coder:coder)!
+    }
+    public override func didMove(to view: SKView) {
+        // Setup your scene here
+    }
+    
+    public override func update(_ currentTime: TimeInterval) {
+        // Called before each frame is rendered
+    }
+    
+    public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let sceneView = self.view as? ARSKView else {
+            return
+        }
+        
+        // Create anchor using the camera's current position
+        if let currentFrame = sceneView.session.currentFrame {
+            // Create a transform with a translation of 0.2 meters in front of the camera
+            var translation = matrix_identity_float4x4
+            translation.columns.3.z = -0.2
+            let transform = simd_mul(currentFrame.camera.transform, translation)
+            
+            // Add a new anchor to the session
+            let anchor = ARAnchor(transform: transform)
+            sceneView.session.add(anchor: anchor)
+        }
+    }
+}
+
 
 class arKitViewController : UIViewController, ARSKViewDelegate {
     @IBOutlet var sceneView: ARSKView!
@@ -18,7 +56,8 @@ class arKitViewController : UIViewController, ARSKViewDelegate {
         
         // Load the SKScene from 'Scene.sks'
         if let scene = SKScene(fileNamed: "Scene") {
-            sceneView.presentScene(scene)
+            let myScene = scene as! Scene
+            sceneView.presentScene(myScene)
         }
         
         let config = ARWorldTrackingSessionConfiguration()
@@ -55,5 +94,4 @@ class arKitViewController : UIViewController, ARSKViewDelegate {
 }
 
 PlaygroundPage.current.liveView = arKitViewController()
-
-
+PlaygroundPage.current.needsIndefiniteExecution = true

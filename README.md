@@ -11,3 +11,5 @@ More info on ARKit:
 
 `A messy kitchen and a virtual pear in the midst of it all`
 ![](http://www.wickedpearprogramming.com/w/wp-content/uploads/2017/06/IMG_584809A41BBF-1.jpg)
+
+The `master` branch now includes all the code in one file so you can tweak the distance from the sample ARKit code in your Swift Playgrounds app. If you'd like the old behavior, check out the [`original`](https://github.com/mhanlon/ARKitDemoPlayground/tree/original) branch.
