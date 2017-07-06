@@ -42,7 +42,7 @@ public class Scene: SKScene {
 }
 
 
-class arKitViewController : UIViewController, ARSKViewDelegate {
+class arKitViewController : UIViewController, ARSKViewDelegate, ARSessionDelegate {
     @IBOutlet var sceneView: ARSKView!
     
     override func loadView() {
@@ -56,16 +56,24 @@ class arKitViewController : UIViewController, ARSKViewDelegate {
         
         // Load the SKScene from 'Scene.sks'
         if let scene = SKScene(fileNamed: "Scene") {
-            let myScene = scene as! Scene
-            sceneView.presentScene(myScene)
+            sceneView.presentScene(scene)
         }
         
         let config = ARWorldTrackingSessionConfiguration()
         config.planeDetection = .horizontal
+        
+        // Now we'll get messages when planes were detected...
+        sceneView.session.delegate = self
+        
         self.view = sceneView
         sceneView.session.run(config)
     }
     
+    
+    // MARK: ARSessionViewDelegate
+    func session(_ session: ARSession, didAdd anchors: [ARAnchor]) {
+        print("The following anchors were added: \(anchors)")
+    }
     
     
     // MARK: - ARSKViewDelegate
