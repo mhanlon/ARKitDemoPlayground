@@ -59,7 +59,7 @@ class arKitViewController : UIViewController, ARSKViewDelegate, ARSessionDelegat
             sceneView.presentScene(scene)
         }
         
-        let config = ARWorldTrackingSessionConfiguration()
+        let config = ARWorldTrackingConfiguration()
         config.planeDetection = .horizontal
         
         // Now we'll get messages when planes were detected...
