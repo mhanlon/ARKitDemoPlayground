@@ -1,4 +1,7 @@
 # ARKitDemoPlayground
+
+**Stay Tuned: ARKitDemoPlayground doesn't seem to work on the iOS GM... Looking into it...**
+
 A demo of the ARKit Demo project from Xcode 9 as a Swift Playground
 
 This is nothing special, in fact, it's the sample project that comes with Xcode 9 for checking out ARKit with SpriteKit. Only I chucked it into a playground.
