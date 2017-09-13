@@ -80,6 +80,7 @@ class arKitViewController : UIViewController, ARSKViewDelegate, ARSessionDelegat
     
     func view(_ view: ARSKView, nodeFor anchor: ARAnchor) -> SKNode? {
         // Create and configure a node for the anchor added to the view's session.
+        var image = #imageLiteral(resourceName: <#T##String#>)
         let spriteNode = SKSpriteNode(imageNamed: "PearLogo.png")
         return spriteNode;
     }

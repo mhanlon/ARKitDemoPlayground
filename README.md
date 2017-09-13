@@ -1,6 +1,6 @@
 # ARKitDemoPlayground
 
-**Stay Tuned: ARKitDemoPlayground doesn't seem to work on the iOS GM... Looking into it...**
+**Make sure you grab the Xcode GM from developer.apple.com, otherwise ARKitDemoPlayground might not work for you on the iOS GM...**
 
 A demo of the ARKit Demo project from Xcode 9 as a Swift Playground
 
