@@ -188,7 +188,10 @@ class FocusSquare: SCNNode {
         SCNTransaction.animationTimingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
         SCNTransaction.animationDuration = animationDuration / 4
         focusSquareNode.opacity = 1.0
-        self.segments.forEach { segment in segment.open() }
+        for segment in self.segments {
+            segment.open()
+        }
+//        self.segments.forEach { segment in segment.open() }
         SCNTransaction.completionBlock = { self.focusSquareNode.runAction(self.pulseAction(), forKey: "pulse") }
         SCNTransaction.commit()
         
@@ -290,12 +293,12 @@ class FocusSquare: SCNNode {
         node.name = "fillPlane"
         node.opacity = 0.0
         
-        let material = plane.firstMaterial!
-        material.diffuse.contents = FocusSquare.primaryColorLight
-        material.isDoubleSided = true
-        material.ambient.contents = UIColor.black
-        material.lightingModel = .constant
-        material.emission.contents = FocusSquare.primaryColorLight
+        let material = plane.firstMaterial
+        material?.diffuse.contents = FocusSquare.primaryColorLight
+        material?.isDoubleSided = true
+        material?.ambient.contents = UIColor.black
+        material?.lightingModel = .constant
+        material?.emission.contents = FocusSquare.primaryColorLight
         
         return node
     }()
@@ -422,12 +425,18 @@ extension FocusSquare {
                                     height: CGFloat(FocusSquare.Segment.thickness))
             }
             
-            let material = geometry!.firstMaterial!
-            material.diffuse.contents = FocusSquare.primaryColor
-            material.isDoubleSided = true
-            material.ambient.contents = UIColor.black
-            material.lightingModel = .constant
-            material.emission.contents = FocusSquare.primaryColor
+            let material = geometry?.firstMaterial
+            material?.diffuse.contents = FocusSquare.primaryColor
+            material?.isDoubleSided = true
+            material?.ambient.contents = UIColor.black
+//            material.lightingModel = .constant
+            material?.emission.contents = FocusSquare.primaryColor
+        }
+        
+        required override init() {
+            self.corner = .topRight
+            self.alignment = .horizontal
+            super.init()
         }
         
         required init?(coder aDecoder: NSCoder) {
