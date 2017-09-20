@@ -15,6 +15,6 @@ More info on ARKit:
 The `touchesBegan` code seems a little... reluctant in Swift Playgrounds. But I've added the playground view controller as an `ARSessionDelegate` and receive messages when horizontal planes are detected, so you'll now see pixelated pears littering the surfaces of your home, office, or school.
 
 `A messy kitchen and a virtual pear in the midst of it all`
-![](http://www.wickedpearprogramming.com/w/wp-content/uploads/2017/06/IMG_584809A41BBF-1.jpg)
+![](http://www.wickedpearprogramming.com/w/wp-content/uploads/2017/09/pear-arkit-1.png)
 
 The `master` branch now includes all the code in one file so you can tweak the distance from the sample ARKit code in your Swift Playgrounds app. If you'd like the old behavior, check out the [`original`](https://github.com/mhanlon/ARKitDemoPlayground/tree/original) branch.
