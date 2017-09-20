@@ -915,7 +915,41 @@ class QISceneKitViewController: UIViewController, ARSCNViewDelegate, ARSessionDe
         sceneView.session.delegate = self
 
         // This will show our cool square overlaid the environment
-        setupFocusSquare()
+        //setupFocusSquare()
+        // default lighting
+        sceneView.autoenablesDefaultLighting = true
+        
+        // a camera
+        var cameraNode = SCNNode()
+        cameraNode.camera = SCNCamera()
+        cameraNode.position = SCNVector3(x: 0, y: 0, z: 3)
+        scene.rootNode.addChildNode(cameraNode)
+        
+        let pyramid = SCNPyramid(width: 0.1, height: 0.2, length: 0.1)
+        let pyramidNode = SCNNode(geometry: pyramid)
+        scene.rootNode.addChildNode(pyramidNode)
+        pyramid.firstMaterial?.diffuse.contents = UIColor.blue
+        pyramid.firstMaterial?.specular.contents = UIColor.white
+        // a geometry object
+        var torus = SCNTorus(ringRadius: 0.25, pipeRadius: 0.5)
+        var torusNode = SCNNode(geometry: torus)
+        scene.rootNode.addChildNode(torusNode)
+        
+        // configure the geometry object
+        torus.firstMaterial?.diffuse.contents  = UIColor.red
+        torus.firstMaterial?.specular.contents = UIColor.white
+        
+        // set a rotation axis (no angle) to be able to
+        // use a nicer keypath below and avoid needing
+        // to wrap it in an NSValue
+        torusNode.rotation = SCNVector4(x: 1.0, y: 1.0, z: 0.0, w: 0.0)
+        
+        // animate the rotation of the torus
+        var spin = CABasicAnimation(keyPath: "rotation.w") // only animate the angle
+        spin.toValue = 2.0*Double.pi
+        spin.duration = 3
+        spin.repeatCount = HUGE // for infinity
+        torusNode.addAnimation(spin, forKey: "spin around")
         
         DispatchQueue.main.async {
             self.screenCenter = self.sceneView.bounds.mid
