@@ -5,16 +5,16 @@ import SceneKit
 import ARKit
 
 class QISceneKitViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
-    let serialQueue = DispatchQueue(label: "com.qisoftware.arkitdemo.serialSpriteKitQueue")
-    var screenCenter: CGPoint? // For the Focus Square from the ARKitExample
     let session = ARSession()
     var sceneView: ARSCNView!
+    var pear: SCNNode?
 
     override func loadView() {
         sceneView = ARSCNView(frame: CGRect(x: 0.0, y: 0.0, width: 500.0, height: 600.0))
         
         let scene = SCNScene()
-        let pearScene = SCNScene(named: "3DWickedPear.scn")!
+        //let pearScene = SCNScene(named: "3DWickedPear.scn")!
+        let pearScene = SCNScene(named: "WickedPear2.scn")!
         sceneView.scene = scene
         
         let config = ARWorldTrackingConfiguration()
@@ -26,16 +26,15 @@ class QISceneKitViewController: UIViewController, ARSCNViewDelegate, ARSessionDe
         sceneView.delegate = self
         sceneView.session = session
         sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints,
-                                  ARSCNDebugOptions.showWorldOrigin,
+                                  ARSCNDebugOptions.showWorldOrigin/*,
                                   .showBoundingBoxes,
                                   .showWireframe,
                                   .showSkeletons,
                                   .showPhysicsShapes,
-                                  .showCameras]
+                                  .showCameras*/
+                                ]
         
         sceneView.showsStatistics = true
-
-        //sceneView.scene.enableEnvironmentMapWithIntensity(25, queue: serialQueue)
         
         // Now we'll get messages when planes were detected...
         sceneView.session.delegate = self
@@ -56,25 +55,34 @@ class QISceneKitViewController: UIViewController, ARSCNViewDelegate, ARSessionDe
         pyramid.firstMaterial?.specular.contents = UIColor.white
         
         // Add our 3d pear...
-        let pear = pearScene.rootNode.childNode(withName: "pear", recursively: true)!
+        pear = pearScene.rootNode.childNode(withName: "pear", recursively: true)!
         
-        pear.geometry?.firstMaterial?.diffuse.contents = UIColor.green
-        pear.geometry?.firstMaterial?.specular.contents = UIColor.white
+        pear?.geometry?.firstMaterial?.diffuse.contents = UIColor.green
+        pear?.geometry?.firstMaterial?.specular.contents = UIColor.green
 
-        pear.scale = SCNVector3(0.15, 0.15, 0.15)
-        pear.rotation = SCNVector4(90, 270, 270, 90)
-        scene.rootNode.addChildNode(pear)
+        // Resize and rotate our pear from our *amazing* Blender rendering
+        // of a pear
+        pear?.scale = SCNVector3(0.15, 0.15, 0.05)
+        pear?.rotation = SCNVector4(180, 180, 180, 0)
+        scene.rootNode.addChildNode(pear!)
         
-        // animate the rotation of the torus
-        let spin = CABasicAnimation(keyPath: "rotation.w") // only animate the angle
-        spin.toValue = 2.0*Double.pi
-        spin.duration = 3
-        spin.repeatCount = HUGE // for infinity
-        pyramid.addAnimation(spin, forKey: "spin around")
+        // Now let's spin our pear around a little bit, spin it
+        // right round baby, right round. Spin it right round.
+        pear?.runAction(SCNAction.rotateBy(x: 5, y: 10, z: 90, duration: 30))
         
         self.view = sceneView
         sceneView.session.run(config, options: [.resetTracking, .removeExistingAnchors])
     }
+    
+    // When we detect a new anchor for the session we'll add a pear to that anchor
+    func session(_ session: ARSession, didAdd anchors: [ARAnchor]) {
+        for anchor in anchors {
+            var pearCopy = self.pear?.copy() as! SCNNode?
+            pearCopy?.position = SCNVector3(anchor.transform.columns.3.x, anchor.transform.columns.3.y, anchor.transform.columns.3.z)
+            sceneView.scene.rootNode.addChildNode(pearCopy!)
+        }
+    }
+
 }
 
 
