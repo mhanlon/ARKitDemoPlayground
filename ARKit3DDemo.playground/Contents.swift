@@ -14,7 +14,7 @@ class QISceneKitViewController: UIViewController, ARSCNViewDelegate, ARSessionDe
         sceneView = ARSCNView(frame: CGRect(x: 0.0, y: 0.0, width: 500.0, height: 600.0))
         
         let scene = SCNScene()
-//        let scene = SCNScene(named: "Scene")
+        let pearScene = SCNScene(named: "3DWickedPear.scn")!
         sceneView.scene = scene
         
         let config = ARWorldTrackingConfiguration()
@@ -25,9 +25,17 @@ class QISceneKitViewController: UIViewController, ARSCNViewDelegate, ARSessionDe
         // Set the view's delegate
         sceneView.delegate = self
         sceneView.session = session
+        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints,
+                                  ARSCNDebugOptions.showWorldOrigin,
+                                  .showBoundingBoxes,
+                                  .showWireframe,
+                                  .showSkeletons,
+                                  .showPhysicsShapes,
+                                  .showCameras]
+        
         sceneView.showsStatistics = true
 
-//        sceneView.scene.enableEnvironmentMapWithIntensity(25, queue: serialQueue)
+        //sceneView.scene.enableEnvironmentMapWithIntensity(25, queue: serialQueue)
         
         // Now we'll get messages when planes were detected...
         sceneView.session.delegate = self
@@ -46,6 +54,16 @@ class QISceneKitViewController: UIViewController, ARSCNViewDelegate, ARSessionDe
         scene.rootNode.addChildNode(pyramidNode)
         pyramid.firstMaterial?.diffuse.contents = UIColor.blue
         pyramid.firstMaterial?.specular.contents = UIColor.white
+        
+        // Add our 3d pear...
+        let pear = pearScene.rootNode.childNode(withName: "pear", recursively: true)!
+        
+        pear.geometry?.firstMaterial?.diffuse.contents = UIColor.green
+        pear.geometry?.firstMaterial?.specular.contents = UIColor.white
+
+        pear.scale = SCNVector3(0.15, 0.15, 0.15)
+        pear.rotation = SCNVector4(90, 270, 270, 90)
+        scene.rootNode.addChildNode(pear)
         
         // animate the rotation of the torus
         let spin = CABasicAnimation(keyPath: "rotation.w") // only animate the angle
