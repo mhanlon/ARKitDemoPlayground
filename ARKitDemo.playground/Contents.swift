@@ -35,17 +35,11 @@ class QIARViewController : UIViewController, ARSKViewDelegate, ARSessionDelegate
         self.view = sceneView
         sceneView.session.run(config)
     }
-    
-    
-    // MARK: ARSessionViewDelegate
-    func session(_ session: ARSession, didAdd anchors: [ARAnchor]) {
-        print("The following anchors were added: \(anchors)")
-    }
 
     // MARK: - ARSKViewDelegate
     func view(_ view: ARSKView, nodeFor anchor: ARAnchor) -> SKNode? {
         // Create and configure a node for the anchor added to the view's session.
-        var image = #imageLiteral(resourceName: "PearLogo.png")
+        let image = #imageLiteral(resourceName: "PearLogo.png")
         let spriteTexture = SKTexture(cgImage: image.cgImage!)
         let spriteNode = SKSpriteNode(texture: spriteTexture)
         // Or you can use this to create a sprite from an emoji,
@@ -76,7 +70,7 @@ PlaygroundPage.current.liveView = QIARViewController()
 PlaygroundPage.current.needsIndefiniteExecution = true
 
 
-//: This is our Scene, which
+//: This is our Scene, which doesn't do a heck of a lot.
 public class Scene: SKScene {
     
     public override required init(size:CGSize) {
@@ -94,22 +88,5 @@ public class Scene: SKScene {
         // Called before each frame is rendered
     }
     
-    public override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let sceneView = self.view as? ARSKView else {
-            return
-        }
-        
-        // Create anchor using the camera's current position
-        if let currentFrame = sceneView.session.currentFrame {
-            // Create a transform with a translation of 0.2 meters in front of the camera
-            var translation = matrix_identity_float4x4
-            translation.columns.3.z = -0.2
-            let transform = simd_mul(currentFrame.camera.transform, translation)
-            
-            // Add a new anchor to the session
-            let anchor = ARAnchor(transform: transform)
-            sceneView.session.add(anchor: anchor)
-        }
-    }
 }
 
