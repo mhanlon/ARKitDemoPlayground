@@ -66,6 +66,12 @@ class QISceneKitViewController: UIViewController, ARSCNViewDelegate, ARSessionDe
         pear?.rotation = SCNVector4(180, 180, 180, 0)
         scene.rootNode.addChildNode(pear!)
         
+        // Or will we add a helicopter?
+//        let helicopterScene = SCNScene(named: "Helicopter.scn")!
+//        let helicopter = helicopterScene.rootNode.childNode(withName: "helicopter", recursively: true)!
+//        helicopter.scale = SCNVector3(1.5, 1.5, 1.5)
+//        scene.rootNode.addChildNode(helicopter)
+        
         // Now let's spin our pear around a little bit, spin it
         // right round baby, right round. Spin it right round.
         pear?.runAction(SCNAction.rotateBy(x: 5, y: 10, z: 90, duration: 30))
@@ -77,7 +83,7 @@ class QISceneKitViewController: UIViewController, ARSCNViewDelegate, ARSessionDe
     // When we detect a new anchor for the session we'll add a pear to that anchor
     func session(_ session: ARSession, didAdd anchors: [ARAnchor]) {
         for anchor in anchors {
-            var pearCopy = self.pear?.copy() as! SCNNode?
+            let pearCopy = self.pear?.copy() as! SCNNode?
             pearCopy?.position = SCNVector3(anchor.transform.columns.3.x, anchor.transform.columns.3.y, anchor.transform.columns.3.z)
             sceneView.scene.rootNode.addChildNode(pearCopy!)
         }
