@@ -43,14 +43,10 @@ class QIBrooklynViewController: UIViewController, ARSKViewDelegate, ARSessionDel
         spriteNode.horizontalAlignmentMode = .center
         spriteNode.verticalAlignmentMode = .center
         
-//        let action = SKAction.repeatForever(SKAction.applyAngularImpulse(2.0, duration: 30))
-//        let moveAction = SKAction.repeatForever(SKAction.applyForce(CGVector(dx:5, dy: 5), duration: 50))
-
         // Add some baby bugs, too...
         for num in 1...4 {
             let babySprite = SKLabelNode(text: "👾")
             babySprite.fontSize = 10
-            babySprite.physicsBody?.isDynamic = true
             
             switch num {
             case 1:
@@ -65,11 +61,8 @@ class QIBrooklynViewController: UIViewController, ARSKViewDelegate, ARSessionDel
                 babySprite.position.x = 0
                 babySprite.position.y = 0
             }
-//            babySprite.run(action)
-//            babySprite.run(moveAction)
             spriteNode.addChild(babySprite)
         }
-//        spriteNode.run(moveAction)
         return spriteNode;
     }
 
