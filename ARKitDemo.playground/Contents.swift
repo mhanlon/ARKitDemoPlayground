@@ -5,7 +5,6 @@ import ARKit
 import PlaygroundSupport
 import SpriteKit
 
-
 class QIARViewController : UIViewController, ARSKViewDelegate, ARSessionDelegate {
     var sceneView: ARSKView!
     
@@ -38,36 +37,43 @@ class QIARViewController : UIViewController, ARSKViewDelegate, ARSessionDelegate
 
     // MARK: - ARSKViewDelegate
     func view(_ view: ARSKView, nodeFor anchor: ARAnchor) -> SKNode? {
-        // Create and configure a node for the anchor added to the view's session.
-        let image = #imageLiteral(resourceName: "PearLogo.png")
-        let spriteTexture = SKTexture(cgImage: image.cgImage!)
-        let spriteNode = SKSpriteNode(texture: spriteTexture)
-        // Or you can use this to create a sprite from an emoji,
+        // You can use this to create a sprite from an emoji,
         // like an alien monster (👾), a cat (🐱), or more (🥛, 🍩, 📦)
-//        let spriteNode = SKLabelNode(text: "👾")
-//        spriteNode.horizontalAlignmentMode = .center
-//        spriteNode.verticalAlignmentMode = .center
+        let spriteNode = SKLabelNode(text: "👾")
+        spriteNode.horizontalAlignmentMode = .center
+        spriteNode.verticalAlignmentMode = .center
+        // Or you could create and configure a node for the anchor added to the view's session.
+//        let image = #imageLiteral(resourceName: "PearLogo.png")
+//        let spriteTexture = SKTexture(cgImage: image.cgImage!)
+//        let spriteNode = SKSpriteNode(texture: spriteTexture)
         return spriteNode;
     }
     
     func session(_ session: ARSession, didFailWithError error: Error) {
         // Present an error message to the user
-        
     }
     
     func sessionWasInterrupted(_ session: ARSession) {
         // Inform the user that the session has been interrupted, for example, by presenting an overlay
-        
     }
     
     func sessionInterruptionEnded(_ session: ARSession) {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
-        
     }
 }
 
+//: We set our custom code above as our live view so that we can see all our hard work
 PlaygroundPage.current.liveView = QIARViewController()
 PlaygroundPage.current.needsIndefiniteExecution = true
+
+
+
+
+
+
+
+
+
 
 
 //: This is our Scene, which doesn't do a heck of a lot.
@@ -87,6 +93,5 @@ public class Scene: SKScene {
     public override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
     }
-    
 }
 
