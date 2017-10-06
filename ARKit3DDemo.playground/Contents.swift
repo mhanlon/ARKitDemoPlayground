@@ -155,16 +155,16 @@ class QISceneKitViewController: UIViewController, ARSCNViewDelegate, ARSessionDe
     
     func randomMaxAnimation() -> String {
         let randomNumber = arc4random_uniform(3)
-        var animation = "idle"
+        var animation = "walk"
         switch randomNumber {
         case 0:
-            animation = "walk"
+            animation = "spin"
         case 1:
             animation = "spin"
         case 1:
             animation = "jump"
         default:
-            animation = "idle"
+            animation = "walk"
         }
         return animation
     }
