@@ -1,6 +1,8 @@
 # ARKitDemoPlayground and Friends
 
-A demo of the ARKit Demo project from Xcode 9 as a Swift Playground. This is the demo that was given at the 404 conference in Dublin on October 7th, 2017.
+A demo of the ARKit Demo project from Xcode 9 as a Swift Playground. This code had to be refactored a little to work around a possible bug (it may be intentional -- Radar forthcoming) in Swift Playgrounds: (https://forums.developer.apple.com/message/301760#301731).
+
+No guarantees about any of the playgrounds except the 3D one
 
 `ARKitDemo.playground` is the sample project that comes with Xcode 9 for checking out ARKit with SpriteKit with a few minor tweaks to get it into a playground.
 
